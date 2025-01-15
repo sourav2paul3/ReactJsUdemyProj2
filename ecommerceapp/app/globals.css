@@ -36,3 +36,13 @@ body {
 .logo {
   @apply font-urbanist font-black text-2xl;
 }
+.hero-section {
+  @apply w-full md:h-[450px] h-[200px] flex items-center;
+}
+.hero-container{
+  @apply h-full md:max-w-[1024px] max-w-[600px] m-auto flex 
+  justify-center items-center relative px-4 md:px-0
+}
+.hero-airpods{
+  @apply absolute md:mt-[300px] mt-[150px]
+}
