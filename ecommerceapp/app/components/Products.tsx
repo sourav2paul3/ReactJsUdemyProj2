@@ -3,7 +3,7 @@ import Card from "./Card";
 import { groq } from "next-sanity";
 import { client } from "@/sanity/lib/client";
 
-const Products = async () => {
+const Products: React.FC = async () => {
   const products = await client.fetch(groq`*[_type=="product"]`);
   console.log(products);
   const sortedItemList = products

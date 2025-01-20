@@ -1,18 +1,21 @@
 "use client";
 import { urlForImage } from "@/sanity/lib/image";
 import Image from "next/image";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import { cartContext } from "../Context/CartContext";
 import { Product } from "./Types/Product";
 
-const ProductsDetails = ({ product }: { product: Product }) => {
+const ProductsDetails: React.FC<{ product: Product }> = ({ product }) => {
   const [index, setIndex] = useState<number>(0);
   const context = useContext(cartContext);
   if (!context) {
     throw new Error("cartContext must be used within a CartProvider");
   }
   const { quantity, setQuantity, increaseQty, dncreaseQty, addProd } = context;
+  useEffect(() => {
+    setQuantity(1);
+  }, [setQuantity]);
   return (
     <div className="product-details-section">
       <div className="product-details-container">

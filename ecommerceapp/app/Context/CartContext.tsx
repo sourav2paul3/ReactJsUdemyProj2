@@ -42,6 +42,33 @@ export const CartProvider: React.FC<React.PropsWithChildren<{}>> = ({
     });
   };
 
+  const toggleCartItemQuantity = (id: string, value: string) => {
+    let foundProd = cartItems.find((item) => item.product._id === id);
+    if (value === "plus") {
+      setCartItems((prevItems) =>
+        prevItems.map((item) =>
+          item.product._id === id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        )
+      );
+      setTotalQuantity(totalQuantity + 1);
+      setTotalPrice(totalPrice + (foundProd?.product.price ?? 0));
+    } else if (value === "minus") {
+      if (foundProd && foundProd.quantity > 1) {
+        setCartItems((prevItems) =>
+          prevItems.map((item) =>
+            item.product._id === id
+              ? { ...item, quantity: item.quantity - 1 }
+              : item
+          )
+        );
+      }
+      setTotalQuantity(totalQuantity - 1);
+      setTotalPrice(totalPrice - (foundProd?.product.price ?? 0));
+    }
+  };
+
   const contextValue = useMemo(
     () => ({
       showCard,
@@ -57,6 +84,7 @@ export const CartProvider: React.FC<React.PropsWithChildren<{}>> = ({
       increaseQty,
       dncreaseQty,
       addProd,
+      toggleCartItemQuantity,
     }),
     [showCard, quantity, cartItems]
   );

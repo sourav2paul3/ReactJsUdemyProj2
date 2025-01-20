@@ -17,4 +17,5 @@ export type showCartype = {
   increaseQty: () => void;
   dncreaseQty: () => void;
   addProd: (product: Product, quantity: number) => void;
+  toggleCartItemQuantity: (id: string, value: string) => void;
 };

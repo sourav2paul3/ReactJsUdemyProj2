@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import heroAirpods from "@/public/heroAirpods.png";
 import heroBanner from "@/public/heroBanner.png";
 
-const Hero = () => {
+const Hero: React.FC = () => {
   const variants = {
     hidden: { x: 0, y: 70, opacity: 0 },
     visible: { x: 0, y: -10, opacity: 1, transition: { delay: 0.05 } },

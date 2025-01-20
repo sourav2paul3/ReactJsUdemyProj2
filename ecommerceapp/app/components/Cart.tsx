@@ -7,7 +7,7 @@ import { urlForImage } from "@/sanity/lib/image";
 import Image from "next/image";
 import { TiDeleteOutline } from "react-icons/ti";
 
-const Cart = () => {
+const Cart: React.FC = () => {
   const context = useContext(cartContext);
 
   if (!context) {
@@ -22,6 +22,7 @@ const Cart = () => {
     setTotalQuantity,
     totalPrice,
     setTotalPrice,
+    toggleCartItemQuantity,
   }: showCartype = context;
 
   function handleCartClose() {
@@ -57,17 +58,27 @@ const Cart = () => {
                 className="object-cover"
               />
               <div className="item-desc">
-                <div className="flex toremove-itemp">
+                <div className="flex top">
                   <h5>{item.product.name}</h5>
                   <h4>${item.product.price * item.quantity}</h4>
                 </div>
                 <div className="flex bottom">
                   <div className="quantity-desc">
-                    <span className="minus">
+                    <span
+                      className="minus"
+                      onClick={() =>
+                        toggleCartItemQuantity(item.product._id, "minus")
+                      }
+                    >
                       <AiOutlineMinus />
                     </span>
                     <span className="num">{item.quantity}</span>
-                    <span className="plus">
+                    <span
+                      className="plus"
+                      onClick={() =>
+                        toggleCartItemQuantity(item.product._id, "plus")
+                      }
+                    >
                       <AiOutlinePlus />
                     </span>
                   </div>

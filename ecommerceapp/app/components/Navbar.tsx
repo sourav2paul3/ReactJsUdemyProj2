@@ -5,7 +5,7 @@ import { IoCartOutline } from "react-icons/io5";
 import Cart from "./Cart";
 import { cartContext } from "../Context/CartContext";
 import { showCartype } from "../components/Types/ShowCartType";
-const Navbar = () => {
+const Navbar: React.FC = () => {
   const context = useContext(cartContext);
 
   if (!context) {
