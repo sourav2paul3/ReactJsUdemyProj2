@@ -1,21 +1,18 @@
 "use client";
 import { urlForImage } from "@/sanity/lib/image";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
-
-type Product = {
-  name: string;
-  price: number;
-  description: string;
-  _id: string;
-  images: Array<{ url: string }>;
-  slug: { current: string };
-};
+import { cartContext } from "../Context/CartContext";
+import { Product } from "./Types/Product";
 
 const ProductsDetails = ({ product }: { product: Product }) => {
   const [index, setIndex] = useState<number>(0);
-  const [quantity, setQuantity] = useState<number>(1);
+  const context = useContext(cartContext);
+  if (!context) {
+    throw new Error("cartContext must be used within a CartProvider");
+  }
+  const { quantity, increaseQty, dncreaseQty } = context;
   return (
     <div className="product-details-section">
       <div className="product-details-container">
@@ -57,11 +54,11 @@ const ProductsDetails = ({ product }: { product: Product }) => {
           <div className="flex gap-2 items-center">
             <h3>Quantity</h3>
             <p className="quantity-desc flex items-center border-black">
-              <span className="minus" onClick={() => setQuantity(quantity - 1)}>
+              <span className="minus" onClick={dncreaseQty}>
                 <AiOutlineMinus />
               </span>
               <span className="num">{quantity}</span>
-              <span className="plus" onClick={() => setQuantity(quantity + 1)}>
+              <span className="plus" onClick={increaseQty}>
                 <AiOutlinePlus />
               </span>
             </p>
