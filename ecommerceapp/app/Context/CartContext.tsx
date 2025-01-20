@@ -2,7 +2,7 @@
 
 import { createContext, useState } from "react";
 import { showCartype } from "../components/Types/ShowCartType";
-
+import { CartItems } from "../components/Types/CartItems";
 export const cartContext = createContext<showCartype | undefined>(undefined);
 
 export const CartProvider: React.FC<React.PropsWithChildren<{}>> = ({
@@ -10,6 +10,7 @@ export const CartProvider: React.FC<React.PropsWithChildren<{}>> = ({
 }) => {
   const [showCard, setShowCard] = useState<boolean>(false);
   const [quantity, setQuantity] = useState<number>(1);
+  const [cartItems, setCartItems] = useState<CartItems[]>([]);
   const increaseQty = () => {
     setQuantity((prevQty) => prevQty + 1);
   };
