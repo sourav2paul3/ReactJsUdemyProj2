@@ -1,6 +1,6 @@
 "use client";
-
-import { createContext, useState } from "react";
+import { Product } from "../components/Types/Product";
+import { createContext, useState, useMemo } from "react";
 import { showCartype } from "../components/Types/ShowCartType";
 import { CartItems } from "../components/Types/CartItems";
 export const cartContext = createContext<showCartype | undefined>(undefined);
@@ -20,10 +20,26 @@ export const CartProvider: React.FC<React.PropsWithChildren<{}>> = ({
       return prevQty - 1;
     });
   };
+
+  const addProd = (product: Product, quantity: number) => {
+    setCartItems((prevItems) => [...prevItems, { product, quantity }]);
+  };
+
+  const contextValue = useMemo(
+    () => ({
+      showCard,
+      quantity,
+      cartItems,
+      setShowCard,
+      increaseQty,
+      dncreaseQty,
+      addProd,
+    }),
+    [showCard, quantity, cartItems]
+  );
+
   return (
-    <cartContext.Provider
-      value={{ showCard, setShowCard, quantity, increaseQty, dncreaseQty }}
-    >
+    <cartContext.Provider value={contextValue}>
       <div>{children}</div>
     </cartContext.Provider>
   );
