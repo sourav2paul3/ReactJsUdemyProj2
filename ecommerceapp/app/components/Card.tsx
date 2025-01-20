@@ -14,7 +14,7 @@ type Product = {
 
 function Card({ product }: { product: Product }) {
   return (
-    <Link href={`/product/${product.slug.current}`}>
+    <Link href={`/Product/${product.slug.current}`}>
       <div
         key={product._id}
         className="bg-white pt-10 drop-shadow-md rounded-lg overflow-hidden"
