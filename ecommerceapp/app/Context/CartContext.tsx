@@ -22,7 +22,20 @@ export const CartProvider: React.FC<React.PropsWithChildren<{}>> = ({
   };
 
   const addProd = (product: Product, quantity: number) => {
-    setCartItems((prevItems) => [...prevItems, { product, quantity }]);
+    setCartItems((prevItems) => {
+      const existingItem = prevItems.find(
+        (item) => item.product._id === product._id
+      );
+      if (existingItem) {
+        return prevItems.map((item) =>
+          item.product._id === product._id
+            ? { ...item, quantity: item.quantity + quantity }
+            : item
+        );
+      } else {
+        return [...prevItems, { product, quantity }];
+      }
+    });
   };
 
   const contextValue = useMemo(
@@ -31,6 +44,7 @@ export const CartProvider: React.FC<React.PropsWithChildren<{}>> = ({
       quantity,
       cartItems,
       setShowCard,
+      setCartItems,
       increaseQty,
       dncreaseQty,
       addProd,

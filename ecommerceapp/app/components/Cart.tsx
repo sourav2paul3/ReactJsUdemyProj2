@@ -13,10 +13,20 @@ const Cart = () => {
   if (!context) {
     throw new Error("cartContext must be used within a CartProvider");
   }
-  const { showCard, setShowCard, cartItems }: showCartype = context;
+  const { showCard, setShowCard, cartItems, setCartItems }: showCartype =
+    context;
+
   function handleCartClose() {
     setShowCard(!showCard);
   }
+  const deleteProd = (id: string) => {
+    setCartItems(
+      cartItems.filter((item) => {
+        item.product._id !== id;
+      })
+    );
+  };
+
   return (
     <div className="cart-wrapper">
       <div className="cart-container">
@@ -29,13 +39,13 @@ const Cart = () => {
           {cartItems.map((item: CartItems, index: number) => (
             <div key={index} className="product">
               <Image
-                src={urlForImage(item.product.images[index]).url()}
+                src={urlForImage(item.product.images[0]).url()}
                 alt={item.product.name}
                 height={250}
                 width={250}
               />
               <div className="item-desc">
-                <div className="flex top">
+                <div className="flex toremove-itemp">
                   <h5>{item.product.name}</h5>
                   <h4>${item.product.price * item.quantity}</h4>
                 </div>
@@ -49,7 +59,10 @@ const Cart = () => {
                       <AiOutlinePlus />
                     </span>
                   </div>
-                  <button className="remove-item">
+                  <button
+                    className="remove-item"
+                    onClick={() => deleteProd(item.product._id)}
+                  >
                     <TiDeleteOutline />
                   </button>
                 </div>

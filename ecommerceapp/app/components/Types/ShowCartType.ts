@@ -7,6 +7,7 @@ export type showCartype = {
   cartItems: Array<CartItems>;
 
   setShowCard: React.Dispatch<React.SetStateAction<boolean>>;
+  setCartItems: React.Dispatch<React.SetStateAction<CartItems[]>>;
   increaseQty: () => void;
   dncreaseQty: () => void;
   addProd: (product: Product, quantity: number) => void;
