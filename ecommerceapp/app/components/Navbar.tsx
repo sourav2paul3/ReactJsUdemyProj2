@@ -11,7 +11,7 @@ const Navbar = () => {
   if (!context) {
     throw new Error("cartContext must be used within a CartProvider");
   }
-  const { showCard, setShowCard }: showCartype = context;
+  const { showCard, setShowCard, totalQuantity }: showCartype = context;
 
   function handleCartOpen() {
     setShowCard(!showCard);
@@ -26,7 +26,7 @@ const Navbar = () => {
           </Link>
           <button className="cart-icon" onClick={handleCartOpen}>
             <IoCartOutline size={30} />
-            <span className="cart-item-quanityt">0</span>
+            <span className="cart-item-quanityt">{totalQuantity}</span>
           </button>
         </div>
       </div>

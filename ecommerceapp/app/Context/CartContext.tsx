@@ -11,6 +11,8 @@ export const CartProvider: React.FC<React.PropsWithChildren<{}>> = ({
   const [showCard, setShowCard] = useState<boolean>(false);
   const [quantity, setQuantity] = useState<number>(1);
   const [cartItems, setCartItems] = useState<CartItems[]>([]);
+  const [totalQuantity, setTotalQuantity] = useState<number>(0);
+  const [totalPrice, setTotalPrice] = useState<number>(0);
   const increaseQty = () => {
     setQuantity((prevQty) => prevQty + 1);
   };
@@ -26,6 +28,8 @@ export const CartProvider: React.FC<React.PropsWithChildren<{}>> = ({
       const existingItem = prevItems.find(
         (item) => item.product._id === product._id
       );
+      setTotalQuantity(() => totalQuantity + quantity);
+      setTotalPrice(() => totalPrice + product.price * quantity);
       if (existingItem) {
         return prevItems.map((item) =>
           item.product._id === product._id
@@ -43,8 +47,13 @@ export const CartProvider: React.FC<React.PropsWithChildren<{}>> = ({
       showCard,
       quantity,
       cartItems,
+      totalQuantity,
+      totalPrice,
       setShowCard,
+      setQuantity,
       setCartItems,
+      setTotalQuantity,
+      setTotalPrice,
       increaseQty,
       dncreaseQty,
       addProd,

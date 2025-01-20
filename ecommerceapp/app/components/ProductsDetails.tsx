@@ -12,7 +12,7 @@ const ProductsDetails = ({ product }: { product: Product }) => {
   if (!context) {
     throw new Error("cartContext must be used within a CartProvider");
   }
-  const { quantity, increaseQty, dncreaseQty, addProd } = context;
+  const { quantity, setQuantity, increaseQty, dncreaseQty, addProd } = context;
   return (
     <div className="product-details-section">
       <div className="product-details-container">

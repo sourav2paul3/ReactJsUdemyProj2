@@ -13,18 +13,29 @@ const Cart = () => {
   if (!context) {
     throw new Error("cartContext must be used within a CartProvider");
   }
-  const { showCard, setShowCard, cartItems, setCartItems }: showCartype =
-    context;
+  const {
+    showCard,
+    setShowCard,
+    cartItems,
+    setCartItems,
+    totalQuantity,
+    setTotalQuantity,
+    totalPrice,
+    setTotalPrice,
+  }: showCartype = context;
 
   function handleCartClose() {
     setShowCard(!showCard);
   }
-  const deleteProd = (id: string) => {
+  const deleteProd = (id: string, price: number, quantity: number) => {
+    console.log(id);
     setCartItems(
       cartItems.filter((item) => {
-        item.product._id !== id;
+        return item.product._id !== id;
       })
     );
+    setTotalQuantity(totalQuantity - quantity);
+    setTotalPrice(totalPrice - price * quantity);
   };
 
   return (
@@ -33,7 +44,7 @@ const Cart = () => {
         <button className="cart-heading " onClick={handleCartClose}>
           <AiOutlineLeft />
           <span className="heading"> Your Cart</span>
-          <span className="cart-num-items "> {cartItems.length}</span>
+          <span className="cart-num-items "> {totalQuantity}</span>
         </button>
         <div className="product-container">
           {cartItems.map((item: CartItems, index: number) => (
@@ -41,8 +52,9 @@ const Cart = () => {
               <Image
                 src={urlForImage(item.product.images[0]).url()}
                 alt={item.product.name}
-                height={250}
-                width={250}
+                height={200}
+                width={200}
+                className="object-cover"
               />
               <div className="item-desc">
                 <div className="flex toremove-itemp">
@@ -60,8 +72,15 @@ const Cart = () => {
                     </span>
                   </div>
                   <button
+                    type="button"
                     className="remove-item"
-                    onClick={() => deleteProd(item.product._id)}
+                    onClick={() =>
+                      deleteProd(
+                        item.product._id,
+                        item.product.price,
+                        item.quantity
+                      )
+                    }
                   >
                     <TiDeleteOutline />
                   </button>
@@ -70,6 +89,19 @@ const Cart = () => {
             </div>
           ))}
         </div>
+        {cartItems.length > 0 && (
+          <div className="cart-bottom">
+            <div className="total">
+              <h3>Subtotal</h3>
+              <h3>${totalPrice}</h3>
+            </div>
+            <div className="btn-container">
+              <button type="button" className="checkout-btn">
+                Pay with Stripe
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
