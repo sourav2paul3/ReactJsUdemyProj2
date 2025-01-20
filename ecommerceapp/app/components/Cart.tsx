@@ -33,7 +33,7 @@ const Cart = () => {
         <button className="cart-heading " onClick={handleCartClose}>
           <AiOutlineLeft />
           <span className="heading"> Your Cart</span>
-          <span className="cart-num-items "> 0</span>
+          <span className="cart-num-items "> {cartItems.length}</span>
         </button>
         <div className="product-container">
           {cartItems.map((item: CartItems, index: number) => (
