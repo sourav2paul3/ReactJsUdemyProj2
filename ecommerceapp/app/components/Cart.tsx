@@ -38,6 +38,22 @@ const Cart: React.FC = () => {
     setTotalPrice(totalPrice - price * quantity);
   };
 
+  const stripeHandleCheckout = async () => {
+    try {
+      const response = await fetch(`http://localhost:3000/api/checkOut`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ products: cartItems }),
+      });
+      const data = await response.json();
+      if (data.url) {
+        window.location.href = data.url;
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className="cart-wrapper">
       <div className="cart-container">
@@ -106,7 +122,11 @@ const Cart: React.FC = () => {
               <h3>${totalPrice}</h3>
             </div>
             <div className="btn-container">
-              <button type="button" className="checkout-btn">
+              <button
+                type="button"
+                className="checkout-btn"
+                onClick={stripeHandleCheckout}
+              >
                 Pay with Stripe
               </button>
             </div>
