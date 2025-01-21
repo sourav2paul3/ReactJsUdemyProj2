@@ -29,7 +29,6 @@ const Cart: React.FC = () => {
     setShowCard(!showCard);
   }
   const deleteProd = (id: string, price: number, quantity: number) => {
-    console.log(id);
     setCartItems(
       cartItems.filter((item) => {
         return item.product._id !== id;
